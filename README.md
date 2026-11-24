@@ -57,7 +57,9 @@ Las consultas son públicas. Las operaciones de escritura requieren autenticaci�
 
 ## Resultados de las pruebas
 
-Se ejecutaron 16 pruebas automatizadas en Postman, de las cuales 15 fueron exitosas. La prueba de ventisca permanece pendiente de verificar con el endpoint SOAP proporcionado por el docente. Actualmente, ante la indisponibilidad del servicio meteorológico, la API responde 202 y guarda el mantenimiento como PENDIENTE_CLIMA.
+Se ejecutaron 16 pruebas automatizadas en Postman: 16 aprobadas, 0 fallidas y 0 omitidas.
+
+La prueba de ventisca devuelve 202 Accepted y guarda el mantenimiento como PENDIENTE_CLIMA, conforme al Escenario B.
 
 Colección: PoloNorte.postman_collection.json.
 
@@ -68,5 +70,3 @@ Separaría el sistema en un microservicio de renos, encargado de su energía, di
 ## Diagrama de arquitectura
 
 [Consultar diagrama](docs/arquitectura.png)
-
-Pendiente de incorporar dentro del plazo complementario.
