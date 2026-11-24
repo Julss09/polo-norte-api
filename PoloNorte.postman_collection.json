@@ -1,0 +1,639 @@
+{
+    "variable":  [
+                     {
+                         "key":  "base_url",
+                         "value":  "http://127.0.0.1:8000/api"
+                     },
+                     {
+                         "key":  "token_ayudante",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "token_elfo",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "reno_id",
+                         "value":  "1"
+                     },
+                     {
+                         "key":  "mantenimiento_id",
+                         "value":  "1"
+                     },
+                     {
+                         "key":  "fecha_ventisca",
+                         "value":  "2026-12-20"
+                     }
+                 ],
+    "info":  {
+                 "name":  "Polo Norte - Escenario B - Completa",
+                 "schema":  "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+             },
+    "item":  [
+                 {
+                     "request":  {
+                                     "body":  {
+                                                  "raw":  "{\"nivelEnergia\":85,\"nombre\":\"Comet\",\"estado\":\"DISPONIBLE\",\"edad\":8}",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              },
+                                                  "mode":  "raw"
+                                              },
+                                     "method":  "POST",
+                                     "url":  "{{base_url}}/renos",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Accept",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Authorization",
+                                                        "value":  "Bearer {{token_ayudante}}"
+                                                    }
+                                                ],
+                                     "auth":  {
+                                                  "type":  "noauth"
+                                              }
+                                 },
+                     "name":  "01 - Crear reno - 201",
+                     "event":  [
+                                   {
+                                       "script":  {
+                                                      "exec":  [
+                                                                   "pm.test(\u0027Estado HTTP esperado\u0027, function () { pm.response.to.have.status(201); });",
+                                                                   "if (pm.response.code === 201) pm.collectionVariables.set(\u0027reno_id\u0027, pm.response.json().id);"
+                                                               ],
+                                                      "type":  "text/javascript"
+                                                  },
+                                       "listen":  "test"
+                                   }
+                               ]
+                 },
+                 {
+                     "request":  {
+                                     "method":  "GET",
+                                     "url":  "{{base_url}}/renos",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Accept",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ],
+                                     "auth":  {
+                                                  "type":  "noauth"
+                                              }
+                                 },
+                     "name":  "02 - Listar renos - 200",
+                     "event":  [
+                                   {
+                                       "script":  {
+                                                      "exec":  [
+                                                                   "pm.test(\u0027Estado HTTP esperado\u0027, function () { pm.response.to.have.status(200); });"
+                                                               ],
+                                                      "type":  "text/javascript"
+                                                  },
+                                       "listen":  "test"
+                                   }
+                               ]
+                 },
+                 {
+                     "request":  {
+                                     "body":  {
+                                                  "raw":  "{\"nivelEnergia\":85,\"nombre\":\"Prueba\",\"edad\":30}",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              },
+                                                  "mode":  "raw"
+                                              },
+                                     "method":  "POST",
+                                     "url":  "{{base_url}}/renos",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Accept",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Authorization",
+                                                        "value":  "Bearer {{token_ayudante}}"
+                                                    }
+                                                ],
+                                     "auth":  {
+                                                  "type":  "noauth"
+                                              }
+                                 },
+                     "name":  "03 - Entrada invalida - 400",
+                     "event":  [
+                                   {
+                                       "script":  {
+                                                      "exec":  [
+                                                                   "pm.test(\u0027Estado HTTP esperado\u0027, function () { pm.response.to.have.status(400); });"
+                                                               ],
+                                                      "type":  "text/javascript"
+                                                  },
+                                       "listen":  "test"
+                                   }
+                               ]
+                 },
+                 {
+                     "request":  {
+                                     "method":  "PATCH",
+                                     "url":  "{{base_url}}/renos/{{reno_id}}/asignacion",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Accept",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ],
+                                     "auth":  {
+                                                  "type":  "noauth"
+                                              }
+                                 },
+                     "name":  "04 - Sin token - 401",
+                     "event":  [
+                                   {
+                                       "script":  {
+                                                      "exec":  [
+                                                                   "pm.test(\u0027Estado HTTP esperado\u0027, function () { pm.response.to.have.status(401); });"
+                                                               ],
+                                                      "type":  "text/javascript"
+                                                  },
+                                       "listen":  "test"
+                                   }
+                               ]
+                 },
+                 {
+                     "request":  {
+                                     "method":  "PATCH",
+                                     "url":  "{{base_url}}/renos/{{reno_id}}/asignacion",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Accept",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Authorization",
+                                                        "value":  "Bearer {{token_elfo}}"
+                                                    }
+                                                ],
+                                     "auth":  {
+                                                  "type":  "noauth"
+                                              }
+                                 },
+                     "name":  "05 - Rol insuficiente - 403",
+                     "event":  [
+                                   {
+                                       "script":  {
+                                                      "exec":  [
+                                                                   "pm.test(\u0027Estado HTTP esperado\u0027, function () { pm.response.to.have.status(403); });"
+                                                               ],
+                                                      "type":  "text/javascript"
+                                                  },
+                                       "listen":  "test"
+                                   }
+                               ]
+                 },
+                 {
+                     "request":  {
+                                     "method":  "GET",
+                                     "url":  "{{base_url}}/renos/999999",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Accept",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ],
+                                     "auth":  {
+                                                  "type":  "noauth"
+                                              }
+                                 },
+                     "name":  "06 - No encontrado - 404",
+                     "event":  [
+                                   {
+                                       "script":  {
+                                                      "exec":  [
+                                                                   "pm.test(\u0027Estado HTTP esperado\u0027, function () { pm.response.to.have.status(404); });"
+                                                               ],
+                                                      "type":  "text/javascript"
+                                                  },
+                                       "listen":  "test"
+                                   }
+                               ]
+                 },
+                 {
+                     "request":  {
+                                     "method":  "PATCH",
+                                     "url":  "{{base_url}}/renos/{{reno_id}}/asignacion",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Accept",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Authorization",
+                                                        "value":  "Bearer {{token_ayudante}}"
+                                                    }
+                                                ],
+                                     "auth":  {
+                                                  "type":  "noauth"
+                                              }
+                                 },
+                     "name":  "07 - Asignar reno - 200",
+                     "event":  [
+                                   {
+                                       "script":  {
+                                                      "exec":  [
+                                                                   "pm.test(\u0027Estado HTTP esperado\u0027, function () { pm.response.to.have.status(200); });"
+                                                               ],
+                                                      "type":  "text/javascript"
+                                                  },
+                                       "listen":  "test"
+                                   }
+                               ]
+                 },
+                 {
+                     "request":  {
+                                     "method":  "PATCH",
+                                     "url":  "{{base_url}}/renos/{{reno_id}}/asignacion",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Accept",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Authorization",
+                                                        "value":  "Bearer {{token_ayudante}}"
+                                                    }
+                                                ],
+                                     "auth":  {
+                                                  "type":  "noauth"
+                                              }
+                                 },
+                     "name":  "08 - Asignacion invalida - 409",
+                     "event":  [
+                                   {
+                                       "script":  {
+                                                      "exec":  [
+                                                                   "pm.test(\u0027Estado HTTP esperado\u0027, function () { pm.response.to.have.status(409); });"
+                                                               ],
+                                                      "type":  "text/javascript"
+                                                  },
+                                       "listen":  "test"
+                                   }
+                               ]
+                 },
+                 {
+                     "request":  {
+                                     "body":  {
+                                                  "raw":  "{\"fechaProgramada\":\"2026-12-20\",\"tipo\":\"INSPECCION\",\"responsable\":\"Pedro\",\"zona\":\"ESTABLO\"}",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              },
+                                                  "mode":  "raw"
+                                              },
+                                     "method":  "POST",
+                                     "url":  "{{base_url}}/mantenimientos",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Accept",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Authorization",
+                                                        "value":  "Bearer {{token_ayudante}}"
+                                                    }
+                                                ],
+                                     "auth":  {
+                                                  "type":  "noauth"
+                                              }
+                                 },
+                     "name":  "09 - Programar mantenimiento - 201",
+                     "event":  [
+                                   {
+                                       "script":  {
+                                                      "exec":  [
+                                                                   "pm.test(\u0027Estado HTTP esperado\u0027, function () { pm.response.to.have.status(201); });",
+                                                                   "if (pm.response.code === 201) pm.collectionVariables.set(\u0027mantenimiento_id\u0027, pm.response.json().datos.id);"
+                                                               ],
+                                                      "type":  "text/javascript"
+                                                  },
+                                       "listen":  "test"
+                                   }
+                               ]
+                 },
+                 {
+                     "request":  {
+                                     "method":  "GET",
+                                     "url":  "{{base_url}}/mantenimientos",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Accept",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ],
+                                     "auth":  {
+                                                  "type":  "noauth"
+                                              }
+                                 },
+                     "name":  "10 - Listar mantenimientos - 200",
+                     "event":  [
+                                   {
+                                       "script":  {
+                                                      "exec":  [
+                                                                   "pm.test(\u0027Estado HTTP esperado\u0027, function () { pm.response.to.have.status(200); });"
+                                                               ],
+                                                      "type":  "text/javascript"
+                                                  },
+                                       "listen":  "test"
+                                   }
+                               ]
+                 },
+                 {
+                     "request":  {
+                                     "body":  {
+                                                  "raw":  "{\"fechaProgramada\":\"2026-12-24\",\"tipo\":\"LIMPIEZA_NIEVE\",\"responsable\":\"Pedro\",\"zona\":\"PISTA_DESPEGUE\"}",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              },
+                                                  "mode":  "raw"
+                                              },
+                                     "method":  "POST",
+                                     "url":  "{{base_url}}/mantenimientos",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Accept",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Authorization",
+                                                        "value":  "Bearer {{token_ayudante}}"
+                                                    }
+                                                ],
+                                     "auth":  {
+                                                  "type":  "noauth"
+                                              }
+                                 },
+                     "name":  "11 - Fallo SOAP - 202",
+                     "event":  [
+                                   {
+                                       "script":  {
+                                                      "exec":  [
+                                                                   "pm.test(\u0027Estado HTTP esperado\u0027, function () { pm.response.to.have.status(202); });"
+                                                               ],
+                                                      "type":  "text/javascript"
+                                                  },
+                                       "listen":  "test"
+                                   }
+                               ]
+                 },
+                 {
+                     "request":  {
+                                     "body":  {
+                                                  "raw":  "{\"fechaProgramada\":\"{{fecha_ventisca}}\",\"tipo\":\"INSPECCION\",\"responsable\":\"Pedro\",\"zona\":\"PISTA_DESPEGUE\"}",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              },
+                                                  "mode":  "raw"
+                                              },
+                                     "method":  "POST",
+                                     "url":  "{{base_url}}/mantenimientos",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Accept",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Authorization",
+                                                        "value":  "Bearer {{token_ayudante}}"
+                                                    }
+                                                ],
+                                     "auth":  {
+                                                  "type":  "noauth"
+                                              }
+                                 },
+                     "name":  "12 - Ventisca - 422",
+                     "event":  [
+                                   {
+                                       "script":  {
+                                                      "exec":  [
+                                                                   "pm.test(\u0027Estado HTTP esperado\u0027, function () { pm.response.to.have.status(422); });"
+                                                               ],
+                                                      "type":  "text/javascript"
+                                                  },
+                                       "listen":  "test"
+                                   }
+                               ]
+                 },
+                 {
+                     "request":  {
+                                     "method":  "GET",
+                                     "url":  "{{base_url}}/renos/{{reno_id}}",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Accept",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ],
+                                     "auth":  {
+                                                  "type":  "noauth"
+                                              }
+                                 },
+                     "name":  "13 - Consultar reno - 200",
+                     "event":  [
+                                   {
+                                       "script":  {
+                                                      "exec":  [
+                                                                   "pm.test(\u0027Estado HTTP esperado\u0027, function () { pm.response.to.have.status(200); });"
+                                                               ],
+                                                      "type":  "text/javascript"
+                                                  },
+                                       "listen":  "test"
+                                   }
+                               ]
+                 },
+                 {
+                     "request":  {
+                                     "body":  {
+                                                  "raw":  "{\"nivelEnergia\":90,\"nombre\":\"Comet\",\"estado\":\"DISPONIBLE\",\"edad\":9}",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              },
+                                                  "mode":  "raw"
+                                              },
+                                     "method":  "PUT",
+                                     "url":  "{{base_url}}/renos/{{reno_id}}",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Accept",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Authorization",
+                                                        "value":  "Bearer {{token_ayudante}}"
+                                                    }
+                                                ],
+                                     "auth":  {
+                                                  "type":  "noauth"
+                                              }
+                                 },
+                     "name":  "14 - Actualizar reno - 200",
+                     "event":  [
+                                   {
+                                       "script":  {
+                                                      "exec":  [
+                                                                   "pm.test(\u0027Estado HTTP esperado\u0027, function () { pm.response.to.have.status(200); });"
+                                                               ],
+                                                      "type":  "text/javascript"
+                                                  },
+                                       "listen":  "test"
+                                   }
+                               ]
+                 },
+                 {
+                     "request":  {
+                                     "method":  "DELETE",
+                                     "url":  "{{base_url}}/renos/{{reno_id}}",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Accept",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Authorization",
+                                                        "value":  "Bearer {{token_ayudante}}"
+                                                    }
+                                                ],
+                                     "auth":  {
+                                                  "type":  "noauth"
+                                              }
+                                 },
+                     "name":  "15 - Eliminar reno - 204",
+                     "event":  [
+                                   {
+                                       "script":  {
+                                                      "exec":  [
+                                                                   "pm.test(\u0027Estado HTTP esperado\u0027, function () { pm.response.to.have.status(204); });"
+                                                               ],
+                                                      "type":  "text/javascript"
+                                                  },
+                                       "listen":  "test"
+                                   }
+                               ]
+                 },
+                 {
+                     "request":  {
+                                     "body":  {
+                                                  "raw":  "{\"estado\":\"EN_CURSO\"}",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              },
+                                                  "mode":  "raw"
+                                              },
+                                     "method":  "PATCH",
+                                     "url":  "{{base_url}}/mantenimientos/{{mantenimiento_id}}/estado",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Accept",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Authorization",
+                                                        "value":  "Bearer {{token_ayudante}}"
+                                                    }
+                                                ],
+                                     "auth":  {
+                                                  "type":  "noauth"
+                                              }
+                                 },
+                     "name":  "16 - Cambiar estado mantenimiento - 200",
+                     "event":  [
+                                   {
+                                       "script":  {
+                                                      "exec":  [
+                                                                   "pm.test(\u0027Estado HTTP esperado\u0027, function () { pm.response.to.have.status(200); });"
+                                                               ],
+                                                      "type":  "text/javascript"
+                                                  },
+                                       "listen":  "test"
+                                   }
+                               ]
+                 }
+             ]
+}
